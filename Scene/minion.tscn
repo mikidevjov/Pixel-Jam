@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://c4rtkdbbd2vyn"]
+
+[ext_resource type="Script" uid="uid://cjnlmlind3nyd" path="res://Script/minion.gd" id="1_min"]
+[ext_resource type="Texture2D" uid="uid://6xgg4kc146nh" path="res://Assets/Sprites/minion.png" id="2_min"]
+[ext_resource type="Texture2D" uid="uid://ujtat5qywnc1" path="res://Assets/Sprites/shadow.png" id="3_min"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_min"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hit"]
+radius = 8.0
+
+[node name="Minion" type="CharacterBody2D" unique_id=1769308987 groups=["enemy"]]
+y_sort_enabled = true
+z_index = 20
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_min")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=520998672]
+z_index = -1
+texture = ExtResource("3_min")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1949087850]
+texture = ExtResource("2_min")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=593073405]
+shape = SubResource("CircleShape2D_min")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=715644527]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=2044194844]
+shape = SubResource("CircleShape2D_hit")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
