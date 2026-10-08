@@ -1,17 +1,80 @@
-[gd_scene load_steps=3 format=3 uid="uid://5qgaoksx8cqg"]
+[gd_scene format=3 uid="uid://5qgaoksx8cqg"]
 
 [ext_resource type="Script" uid="uid://be4fmfhj5ob5j" path="res://Script/tile.gd" id="1_til"]
+[ext_resource type="Texture2D" uid="uid://dxkolfvc73pg5" path="res://Assets/NewArt-assets/land-crumble-Sheet.webp" id="2_gdj8f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tile"]
-size = Vector2(40, 40)
+size = Vector2(32, 16)
 
-[node name="Tile" type="Node2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1"]
+atlas = ExtResource("2_gdj8f")
+region = Rect2(88, 8, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2"]
+atlas = ExtResource("2_gdj8f")
+region = Rect2(168, 8, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3"]
+atlas = ExtResource("2_gdj8f")
+region = Rect2(248, 8, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f4"]
+atlas = ExtResource("2_gdj8f")
+region = Rect2(328, 8, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5"]
+atlas = ExtResource("2_gdj8f")
+region = Rect2(408, 8, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6"]
+atlas = ExtResource("2_gdj8f")
+region = Rect2(488, 8, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7"]
+atlas = ExtResource("2_gdj8f")
+region = Rect2(568, 8, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gcyve"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f7")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="Tile" type="Node2D" unique_id=1055767516]
 script = ExtResource("1_til")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1.25, 1.25)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1013787214]
+texture_filter = 0
 
-[node name="Area2D" type="Area2D" parent="." groups=["walkable_tile"]]
+[node name="Area2D" type="Area2D" parent="." unique_id=2006584131 groups=["walkable_tile"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=450931641]
 shape = SubResource("RectangleShape2D_tile")
+
+[node name="ExampleAnimatedCrack" type="AnimatedSprite2D" parent="." unique_id=136991456]
+visible = false
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_gcyve")

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bossprojectilescene"]
+
+[ext_resource type="Script" path="res://Script/boss_projectile.gd" id="1_bpj"]
+[ext_resource type="Texture2D" uid="uid://c2re14mooftfd" path="res://Assets/Sprites/bullet.png" id="2_bpj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_boss_prj"]
+radius = 8.0
+
+[node name="BossProjectile" type="Area2D"]
+z_index = 32
+texture_filter = 0
+script = ExtResource("1_bpj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.4, 0.1, 0.6, 1)
+texture_filter = 0
+texture = ExtResource("2_bpj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_boss_prj")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

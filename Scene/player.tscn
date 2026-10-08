@@ -1,24 +1,26 @@
 [gd_scene format=3 uid="uid://d1quhy08ooh52"]
 
 [ext_resource type="Script" uid="uid://dk2gnwui87nlq" path="res://Script/player.gd" id="1_plr"]
-[ext_resource type="Texture2D" uid="uid://cla30dj7q4t6s" path="res://Assets/Sprites/red_soul.png" id="2_plr"]
-[ext_resource type="Texture2D" uid="uid://ujtat5qywnc1" path="res://Assets/Sprites/shadow.png" id="3_plr"]
+[ext_resource type="Texture2D" path="res://Assets/Resources/atlas_red_soul.tres" id="2_plr"]
+[ext_resource type="Texture2D" path="res://Assets/Resources/atlas_minion_shadow.tres" id="3_plr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_plr"]
-radius = 6.0827627
+radius = 5.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1614195900 groups=["player"]]
-y_sort_enabled = true
 z_index = 20
+y_sort_enabled = true
+texture_filter = 0
 collision_mask = 0
 script = ExtResource("1_plr")
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1476142634]
 z_index = -1
+texture_filter = 0
 texture = ExtResource("3_plr")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=927663151]
-scale = Vector2(1.62, 1.62)
+texture_filter = 0
 texture = ExtResource("2_plr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1741656136]

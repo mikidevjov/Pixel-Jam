@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://b5coredustscene"]
+
+[ext_resource type="Script" path="res://Script/core_dust.gd" id="1_dst"]
+[ext_resource type="Texture2D" path="res://Assets/Resources/atlas_core_dust.tres" id="2_dst"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dust"]
+radius = 3.0
+
+[node name="CoreDust" type="Area2D"]
+z_index = 22
+texture_filter = 0
+collision_layer = 8
+collision_mask = 1
+script = ExtResource("1_dst")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(2, 0.4, 0.3, 1)
+texture_filter = 0
+texture = ExtResource("2_dst")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dust")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,24 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://clqu641xd6kat"]
+[gd_scene format=3 uid="uid://clqu641xd6kat"]
 
 [ext_resource type="Script" uid="uid://b5xkso4y31f08" path="res://Script/main.gd" id="1_mg"]
-[ext_resource type="Texture2D" uid="uid://27ryls32krkv" path="res://Assets/Basic_Env_Assets/the-void.png.webp" id="2_mg"]
+[ext_resource type="Texture2D" uid="uid://2cxb5igajwh7" path="res://Assets/NewArt-assets/the-void.webp" id="2_mg"]
 [ext_resource type="PackedScene" uid="uid://dw6hojlkyx00s" path="res://Scene/arena.tscn" id="3_mg"]
 [ext_resource type="PackedScene" uid="uid://d1quhy08ooh52" path="res://Scene/player.tscn" id="4_mg"]
-[ext_resource type="PackedScene" uid="uid://esnsiavhvgfq" path="res://Scene/ui.tscn" id="5_mg"]
+[ext_resource type="PackedScene" uid="uid://ditu77w4fxphx" path="res://Scene/ui.tscn" id="5_mg"]
 
-[node name="MainGame" type="Node2D"]
+[node name="MainGame" type="Node2D" unique_id=1098079758]
 script = ExtResource("1_mg")
 
-[node name="VoidBackground" type="Sprite2D" parent="."]
+[node name="VoidBackground" type="Sprite2D" parent="." unique_id=709033686]
 z_index = -100
-scale = Vector2(2, 2)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_mg")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.05, 1.05)
+[node name="Camera2D" type="Camera2D" parent="." unique_id=900010290]
 
-[node name="Arena" parent="." instance=ExtResource("3_mg")]
+[node name="Arena" parent="." unique_id=1821487061 instance=ExtResource("3_mg")]
 
-[node name="Player" parent="." instance=ExtResource("4_mg")]
+[node name="Player" parent="." unique_id=818889406 instance=ExtResource("4_mg")]
 
-[node name="UI" parent="." instance=ExtResource("5_mg")]
+[node name="UI" parent="." unique_id=1516436577 instance=ExtResource("5_mg")]

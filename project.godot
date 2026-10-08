@@ -15,15 +15,25 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="RED SOUL"
-run/main_scene="res://Scene/main_game.tscn"
+run/main_scene="res://Scene/start_menu.tscn"
 config/features=PackedStringArray("4.7")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PixelSpec="*res://Script/pixel_spec.gd"
+
 [display]
 
-window/size/viewport_width=768
-window/size/viewport_height=432
+window/size/viewport_width=384
+window/size/viewport_height=216
+window/size/mode=3
 window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
+
+[gui]
+
+theme/custom="res://Assets/Resources/pixelcraft_theme.tres"
 
 [rendering]
 

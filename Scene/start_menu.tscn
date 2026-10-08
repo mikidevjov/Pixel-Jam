@@ -1,0 +1,173 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqm8startmenu01"]
+
+[ext_resource type="Script" path="res://Script/start_menu.gd" id="1_menu"]
+[ext_resource type="Theme" path="res://Assets/Resources/pixelcraft_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" uid="uid://2cxb5igajwh7" path="res://Assets/NewArt-assets/the-void.webp" id="3_void"]
+[ext_resource type="Texture2D" uid="uid://xo3spf7djw7m" path="res://Assets/NewArt-assets/title.webp" id="4_title"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.22, 0.08, 0.1, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.18, 0.22, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.38, 0.12, 0.16, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.85, 0.28, 0.32, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.08, 0.06, 0.09, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.16, 0.2, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="StartMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_menu")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_void")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuColumn" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Title" type="TextureRect" parent="CenterContainer/MenuColumn"]
+custom_minimum_size = Vector2(208, 96)
+layout_mode = 2
+texture = ExtResource("4_title")
+texture_filter = 0
+stretch_mode = 5
+
+[node name="Buttons" type="VBoxContainer" parent="CenterContainer/MenuColumn"]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="StartButton" type="Button" parent="CenterContainer/MenuColumn/Buttons"]
+custom_minimum_size = Vector2(96, 16)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.86, 0.86, 1)
+theme_override_colors/font_hover_color = Color(1, 0.92, 0.92, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+text = "START"
+
+[node name="SettingButton" type="Button" parent="CenterContainer/MenuColumn/Buttons"]
+custom_minimum_size = Vector2(96, 16)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.86, 0.86, 1)
+theme_override_colors/font_hover_color = Color(1, 0.92, 0.92, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+text = "SETTING"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/MenuColumn/Buttons"]
+custom_minimum_size = Vector2(96, 16)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.86, 0.86, 1)
+theme_override_colors/font_hover_color = Color(1, 0.92, 0.92, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+text = "QUIT"
+
+[node name="SettingsPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -40.0
+offset_right = 90.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsVBox" type="VBoxContainer" parent="SettingsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="SettingsTitle" type="Label" parent="SettingsPanel/SettingsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.75, 0.78, 1)
+theme_override_font_sizes/font_size = 10
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="SettingsHint" type="Label" parent="SettingsPanel/SettingsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.72, 0.78, 1)
+theme_override_font_sizes/font_size = 8
+text = "More options soon."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SettingsBackButton" type="Button" parent="SettingsPanel/SettingsVBox"]
+custom_minimum_size = Vector2(72, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 10
+text = "BACK"
+
+[connection signal="pressed" from="CenterContainer/MenuColumn/Buttons/StartButton" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="CenterContainer/MenuColumn/Buttons/SettingButton" to="." method="_on_setting_pressed"]
+[connection signal="pressed" from="CenterContainer/MenuColumn/Buttons/QuitButton" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="SettingsPanel/SettingsVBox/SettingsBackButton" to="." method="_on_settings_back_pressed"]

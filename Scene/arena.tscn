@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://Script/arena.gd" id="1_are"]
 
 [node name="Arena" type="Node2D"]
-z_index = 10
+z_index = 0
 script = ExtResource("1_are")
-grid_width = 12
-grid_height = 12
-tile_size = 40.0
+grid_width = 8
+grid_height = 8
+tile_footprint = Vector2(32, 16)

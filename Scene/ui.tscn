@@ -1,6 +1,48 @@
-[gd_scene load_steps=2 format=3 uid="uid://e0ce80e9e9444394"]
+[gd_scene format=3 uid="uid://e0ce80e9e9444394"]
 
 [ext_resource type="Script" path="res://Script/ui.gd" id="1_ui"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_laser_bg"]
+bg_color = Color(0.12, 0.1, 0.12, 0.8)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_laser_fill"]
+bg_color = Color(0.9, 0.18, 0.22, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dust_bg"]
+bg_color = Color(0.12, 0.1, 0.12, 0.8)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dust_fill"]
+bg_color = Color(0.95, 0.55, 0.15, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_bg"]
+bg_color = Color(0.1, 0.08, 0.12, 0.9)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_fill"]
+bg_color = Color(0.75, 0.12, 0.28, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_ui")
@@ -15,38 +57,124 @@ grow_vertical = 2
 
 [node name="HeartsContainer" type="HBoxContainer" parent="Control"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 120.0
-offset_bottom = 40.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 72.0
+offset_bottom = 32.0
 theme_override_constants/separation = 4
-
-[node name="KillsLabel" type="Label" parent="Control"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -220.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 50.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 20
-text = "MINIONS: 0 / 20"
-horizontal_alignment = 2
 
 [node name="LevelLabel" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -60.0
-offset_top = 20.0
-offset_right = 60.0
-offset_bottom = 50.0
+offset_left = -48.0
+offset_top = 16.0
+offset_right = 48.0
+offset_bottom = 32.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 8
 text = "LEVEL 1"
+horizontal_alignment = 1
+
+[node name="KillsLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 16.0
+offset_right = 368.0
+offset_bottom = 32.0
+theme_override_font_sizes/font_size = 8
+text = "SCORE: 0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="LaserContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 36.0
+offset_right = 144.0
+offset_bottom = 56.0
+theme_override_constants/separation = 2
+
+[node name="LaserLabel" type="Label" parent="Control/LaserContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "LASER [R]"
+
+[node name="LaserBar" type="ProgressBar" parent="Control/LaserContainer"]
+custom_minimum_size = Vector2(128, 8)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_laser_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_laser_fill")
+value = 100.0
+show_percentage = false
+
+[node name="DustContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 36.0
+offset_right = 368.0
+offset_bottom = 62.0
+theme_override_constants/separation = 2
+
+[node name="DustLabel" type="Label" parent="Control/DustContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "CORE DUST"
+horizontal_alignment = 2
+
+[node name="DustBar" type="ProgressBar" parent="Control/DustContainer"]
+custom_minimum_size = Vector2(128, 8)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_dust_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dust_fill")
+show_percentage = false
+
+[node name="DustCountLabel" type="Label" parent="Control/DustContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.75, 0.4, 1)
+theme_override_font_sizes/font_size = 6
+text = "RESTORES: 0 / 2"
+horizontal_alignment = 2
+
+[node name="BossContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 176.0
+offset_right = 352.0
+offset_bottom = 200.0
+theme_override_constants/separation = 2
+
+[node name="BossLabel" type="Label" parent="Control/BossContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 7
+text = "THE BLACK SOUL"
+horizontal_alignment = 1
+
+[node name="BossBar" type="ProgressBar" parent="Control/BossContainer"]
+custom_minimum_size = Vector2(320, 8)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_boss_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_boss_fill")
+value = 100.0
+show_percentage = false
+
+[node name="LevelBanner" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -24.0
+offset_right = 120.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 10
 horizontal_alignment = 1
 
 [node name="GameOverLabel" type="Label" parent="Control"]
@@ -56,15 +184,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
+offset_left = -120.0
 offset_top = -40.0
-offset_right = 150.0
-offset_bottom = 20.0
+offset_right = 120.0
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
-theme_override_font_sizes/font_size = 36
-text = "GAME OVER"
+theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
+theme_override_font_sizes/font_size = 24
+text = "SCORE
+0"
 horizontal_alignment = 1
 
 [node name="LevelCompleteLabel" type="Label" parent="Control"]
@@ -74,16 +203,35 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -50.0
-offset_right = 250.0
-offset_bottom = 50.0
+offset_left = -120.0
+offset_top = -20.0
+offset_right = 120.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.2, 1, 0.4, 1)
-theme_override_font_sizes/font_size = 28
-text = "LEVEL 1 COMPLETE
-LEVEL 2 NOT IMPLEMENTED"
+theme_override_font_sizes/font_size = 10
+text = "LEVEL COMPLETE"
+horizontal_alignment = 1
+
+[node name="VictoryLabel" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -28.0
+offset_right = 140.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 10
+text = "VICTORY
+THE VOID HAS BEEN PURGED
+THE LAND IS RESTORED"
 horizontal_alignment = 1
 
 [node name="RestartHint" type="Label" parent="Control"]
@@ -93,12 +241,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = 50.0
-offset_right = 150.0
-offset_bottom = 80.0
+offset_left = -100.0
+offset_top = 18.0
+offset_right = 100.0
+offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 8
 text = "Press Enter or Space to Restart"
 horizontal_alignment = 1

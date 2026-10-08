@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://d3mediumenemyscene"]
+
+[ext_resource type="Script" path="res://Script/medium_enemy.gd" id="1_med"]
+[ext_resource type="Texture2D" path="res://Assets/Resources/atlas_medium_enemy.tres" id="2_med"]
+[ext_resource type="Texture2D" path="res://Assets/Resources/atlas_medium_shadow.tres" id="3_med"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hit"]
+radius = 11.0
+
+[node name="MediumEnemy" type="CharacterBody2D" groups=["enemy"]]
+y_sort_enabled = true
+z_index = 20
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_med")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("3_med")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_med")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_body")
+
+[node name="Hitbox" type="Area2D" parent="." groups=["enemy_hurtbox"]]
+collision_layer = 2
+monitorable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_hit")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

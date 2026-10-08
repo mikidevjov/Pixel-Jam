@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=2 format=3]
+
+[ext_resource type="FontFile" uid="uid://c7uc1ib434sgc" path="res://Assets/NewArt-assets/font-Pixelcraft.otf" id="1_font"]
+
+[resource]
+Button/font_sizes/font_size = 10
+Button/fonts/font = ExtResource("1_font")
+Label/font_sizes/font_size = 8
+Label/fonts/font = ExtResource("1_font")
+ProgressBar/font_sizes/font_size = 8
+ProgressBar/fonts/font = ExtResource("1_font")
+default_font = ExtResource("1_font")
+default_font_size = 8

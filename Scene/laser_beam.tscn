@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1f1ajea46x4a"]
+
+[ext_resource type="Script" uid="uid://cq3di7jefomes" path="res://Script/laser_beam.gd" id="1_lsr"]
+[ext_resource type="Texture2D" path="res://Assets/Resources/atlas_laser_beam.tres" id="2_lsr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_beam"]
+size = Vector2(384, 8)
+
+[node name="LaserBeam" type="Node2D"]
+z_index = 25
+texture_filter = 0
+script = ExtResource("1_lsr")
+
+[node name="BeamSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_lsr")
+centered = false
+offset = Vector2(0, -4)
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+position = Vector2(192, 0)
+shape = SubResource("RectangleShape2D_beam")

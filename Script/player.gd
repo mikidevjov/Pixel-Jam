@@ -1,8 +1,12 @@
 extends CharacterBody2D
-
-@export var step_interval: float = 0.14
+# who did't read this code is gay
+@export var step_interval: float = 0.05
 @export var max_health: int = 3
 @export var fire_rate: float = 0.22
+@export var max_laser_energy: float = 100.0
+@export var laser_drain_rate: float = 38.0
+@export var laser_recharge_time: float = 2.5
+@export var laser_damage: float = 8.0
 
 var health: int = 3
 var last_shot_time: float = 999.0
@@ -13,6 +17,13 @@ var invulnerable_timer: float = 0.0
 var off_tile_timer: float = 0.0
 var game_start_grace: float = 0.5
 
+var laser_unlocked: bool = false
+var laser_energy: float = 100.0
+var is_firing_laser: bool = false
+var laser_overheated: bool = false
+var laser_beam_instance: Node2D = null
+var laser_scene = preload("res://Scene/laser_beam.tscn")
+
 var grid_pos: Vector2i = Vector2i.ZERO
 var step_timer: float = 0.0
 var is_stepping: bool = false
@@ -22,19 +33,26 @@ var foot_lift: float = 0.0
 @onready var shadow: Sprite2D = $Shadow
 
 var arena: Node2D = null
+var spawn_world_position: Vector2 = Vector2.ZERO
 var projectile_scene = preload("res://Scene/projectile.tscn")
 
 signal player_died
 signal player_health_changed(new_health: int)
 signal player_fired
+signal laser_energy_changed(current: float, maximum: float)
 
 func _ready():
 	add_to_group("player")
+	spawn_world_position = global_position
 	health = max_health
+	laser_energy = max_laser_energy
 	arena = get_tree().get_first_node_in_group("arena")
 	if sprite:
 		sprite.rotation = 0.0
-	foot_lift = SoulFootAnchor.apply(self, sprite, shadow)
+	foot_lift = SoulFootAnchor.apply(self, sprite, shadow, PixelSpec.RED_SOUL_SIZE)
+	laser_beam_instance = laser_scene.instantiate()
+	laser_beam_instance.damage_per_second = laser_damage
+	get_parent().call_deferred("add_child", laser_beam_instance)
 	call_deferred("_snap_to_grid")
 
 func _snap_to_grid():
@@ -44,6 +62,19 @@ func _snap_to_grid():
 		return
 	grid_pos = arena.world_to_grid(global_position)
 	global_position = arena.grid_to_world(grid_pos.x, grid_pos.y)
+
+
+func reset_to_start_position() -> void:
+	if not arena:
+		arena = get_tree().get_first_node_in_group("arena")
+	if not arena:
+		global_position = spawn_world_position
+		return
+	grid_pos = arena.world_to_grid(spawn_world_position)
+	global_position = arena.grid_to_world(grid_pos.x, grid_pos.y)
+	is_stepping = false
+	step_timer = 0.0
+	velocity = Vector2.ZERO
 
 func _process(delta: float):
 	if invulnerable_timer > 0.0:
@@ -61,6 +92,7 @@ func _physics_process(delta: float):
 		game_start_grace -= delta
 
 	velocity = Vector2.ZERO
+	SoulFootAnchor.sync_render_depth(self, grid_pos.y)
 
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	var to_mouse: Vector2 = mouse_pos - global_position
@@ -68,6 +100,33 @@ func _physics_process(delta: float):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and last_shot_time >= fire_rate:
 		if to_mouse.length_squared() > 16.0:
 			shoot(to_mouse.normalized())
+
+	# Laser Cut (Right Click)
+	if laser_unlocked:
+		var wants_laser: bool = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
+		if wants_laser and not laser_overheated and laser_energy > 0.0:
+			is_firing_laser = true
+			laser_energy = max(0.0, laser_energy - laser_drain_rate * delta)
+			if laser_energy <= 0.0:
+				laser_overheated = true
+				is_firing_laser = false
+			var aim_dir: Vector2 = to_mouse.normalized()
+			if laser_beam_instance:
+				var beam_pos = global_position + SoulFootAnchor.chest_offset(sprite, foot_lift)
+				laser_beam_instance.set_beam_active(is_firing_laser, aim_dir, beam_pos)
+		else:
+			is_firing_laser = false
+			if laser_beam_instance:
+				laser_beam_instance.set_beam_active(false, Vector2.ZERO, global_position)
+			if laser_energy < max_laser_energy:
+				var recharge_speed: float = max_laser_energy / laser_recharge_time
+				laser_energy = min(max_laser_energy, laser_energy + recharge_speed * delta)
+				if laser_energy >= 20.0:
+					laser_overheated = false
+
+		laser_energy_changed.emit(laser_energy, max_laser_energy)
+	elif laser_beam_instance and laser_beam_instance.is_beam_active:
+		laser_beam_instance.set_beam_active(false, Vector2.ZERO, global_position)
 
 	_try_grid_step(delta)
 	check_tile_standing(delta)
@@ -164,7 +223,7 @@ func check_tile_standing(delta: float):
 
 func _is_game_stopped() -> bool:
 	var main = get_tree().get_first_node_in_group("main")
-	return main != null and (main.get("is_game_over") or main.get("is_level_complete"))
+	return main != null and main.get("is_game_over")
 
 func fall_into_void():
 	if is_falling or is_dead:
@@ -203,5 +262,34 @@ func die():
 	if is_dead:
 		return
 	is_dead = true
+	if laser_beam_instance:
+		laser_beam_instance.set_beam_active(false, Vector2.ZERO, global_position)
 	player_died.emit()
 	hide()
+
+func setup_for_run() -> void:
+	health = max_health
+	is_dead = false
+	is_falling = false
+	died_from_void = false
+	invulnerable_timer = 0.0
+	off_tile_timer = 0.0
+	game_start_grace = 0.5
+	visible = true
+	modulate = Color.WHITE
+	scale = Vector2.ONE
+	if shadow:
+		shadow.show()
+	laser_unlocked = true
+	laser_energy = max_laser_energy
+	laser_overheated = false
+	is_firing_laser = false
+	if laser_beam_instance:
+		laser_beam_instance.set_beam_active(false, Vector2.ZERO, global_position)
+	laser_energy_changed.emit(laser_energy, max_laser_energy)
+	player_health_changed.emit(health)
+	reset_to_start_position()
+
+func _exit_tree():
+	if laser_beam_instance and is_instance_valid(laser_beam_instance):
+		laser_beam_instance.queue_free()
