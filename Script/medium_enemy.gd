@@ -103,6 +103,7 @@ func _try_grid_step(delta: float):
 func _begin_grid_step(next: Vector2i):
 	is_stepping = true
 	grid_pos = next
+	AudioManager.play_sfx("movement_darksouls")
 	var target: Vector2 = arena.grid_to_world(next.x, next.y)
 	var tween = create_tween()
 	tween.tween_property(self, "global_position", target, step_interval * 0.90)

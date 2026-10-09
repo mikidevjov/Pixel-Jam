@@ -64,6 +64,7 @@ func _process(delta: float):
 
 func _start_telegraph():
 	state = State.TELEGRAPH
+	AudioManager.play_sfx("movement_boss_darksoul")
 	if telegraph_glow:
 		telegraph_glow.show()
 		telegraph_glow.scale = Vector2.ZERO

@@ -121,6 +121,7 @@ func start_falling():
 	state = State.FALLING
 	timer = 0.0
 	position = orig_pos
+	AudioManager.play_sfx("falling_tile")
 	if _vibrate_land_before_fall:
 		if sprite:
 			sprite.hide()

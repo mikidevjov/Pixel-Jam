@@ -105,6 +105,8 @@ func _physics_process(delta: float):
 	if laser_unlocked:
 		var wants_laser: bool = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
 		if wants_laser and not laser_overheated and laser_energy > 0.0:
+			if not is_firing_laser:
+				AudioManager.play_sfx("laser-fire")
 			is_firing_laser = true
 			laser_energy = max(0.0, laser_energy - laser_drain_rate * delta)
 			if laser_energy <= 0.0:
@@ -172,6 +174,7 @@ func _try_grid_step(delta: float):
 func _begin_grid_step(next: Vector2i):
 	is_stepping = true
 	grid_pos = next
+	AudioManager.play_sfx("movement_player")
 	var target: Vector2 = arena.grid_to_world(next.x, next.y)
 	var tween = create_tween()
 	tween.tween_property(self, "global_position", target, step_interval * 0.92)
@@ -198,6 +201,7 @@ func spawn_trail():
 
 func shoot(dir: Vector2):
 	last_shot_time = 0.0
+	AudioManager.play_sfx("gun_fire")
 	var proj = projectile_scene.instantiate()
 	proj.direction = dir
 	get_parent().add_child(proj)
@@ -231,6 +235,7 @@ func fall_into_void():
 	died_from_void = true
 	is_falling = true
 	velocity = Vector2.ZERO
+	AudioManager.play_sfx("falling_player")
 	if shadow:
 		shadow.hide()
 

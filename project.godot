@@ -22,6 +22,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 PixelSpec="*res://Script/pixel_spec.gd"
+AudioManager="*res://Script/audio_manager.gd"
+
 
 [display]
 

@@ -22,6 +22,8 @@ func _ready() -> void:
 	if settings_panel:
 		settings_panel.hide()
 	_load_settings()
+	AudioManager.play_music("main_menu")
+
 
 
 func _on_start_pressed() -> void:

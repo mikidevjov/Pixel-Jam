@@ -60,6 +60,7 @@ func start_game() -> void:
 	current_boss = null
 	dust_spawn_timer = 0.0
 	pending_dust_spawns.clear()
+	AudioManager.play_music("stage1")
 
 	_clear_all_enemies_and_projectiles()
 
@@ -109,6 +110,8 @@ func _process(delta: float):
 		return
 
 	run_elapsed += delta
+	if not is_game_over and not boss_spawned_this_run and run_elapsed >= medium_unlock_time:
+		AudioManager.play_music("stage2")
 	_process_spawning(delta)
 	_process_dust_spawns(delta)
 
@@ -130,6 +133,7 @@ func _try_spawn_boss() -> void:
 	if not boss_scene:
 		return
 	boss_spawned_this_run = true
+	AudioManager.play_music("stage3")
 	current_boss = boss_scene.instantiate()
 	if current_boss.has_signal("boss_died"):
 		current_boss.boss_died.connect(_on_boss_died)
@@ -224,6 +228,7 @@ func _arena_has_walkable_tiles() -> bool:
 func collect_dust(_amount: float) -> void:
 	if is_game_over:
 		return
+	AudioManager.play_sfx("Dust_Pickup")
 	add_trauma(0.08)
 	if arena and arena.has_method("restore_fallen_tiles"):
 		arena.restore_fallen_tiles(1)
@@ -264,8 +269,11 @@ func _on_boss_died() -> void:
 	add_score(SCORE_BOSS)
 	add_trauma(0.6)
 	current_boss = null
+	AudioManager.play_sfx("boss_very_dead")
+	AudioManager.play_music("win", false)
 
 func on_boss_dust_collected() -> void:
+	AudioManager.play_sfx("Dust_Pickup")
 	add_trauma(0.4)
 	if arena and arena.has_method("restore_fallen_tiles"):
 		arena.restore_fallen_tiles(2)
@@ -273,6 +281,7 @@ func on_boss_dust_collected() -> void:
 func _on_player_died() -> void:
 	is_game_over = true
 	_stop_game()
+	AudioManager.play_music("game_over", false)
 	add_trauma(0.6)
 	if ui:
 		ui.show_game_over(score)
