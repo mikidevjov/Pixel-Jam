@@ -45,6 +45,34 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slider_bg"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.14, 0.06, 0.08, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.16, 0.2, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slider_fill"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.7, 0.18, 0.24, 1)
+corner_radius_top_left = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slider_fill_hover"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.88, 0.26, 0.32, 1)
+corner_radius_top_left = 1
+corner_radius_bottom_left = 1
+
 [node name="StartMenu" type="Control" unique_id=210414485]
 layout_mode = 3
 anchors_preset = 15
@@ -131,17 +159,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -90.0
-offset_top = -40.0
-offset_right = 90.0
-offset_bottom = 40.0
+offset_left = -105.0
+offset_top = -68.0
+offset_right = 105.0
+offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="SettingsVBox" type="VBoxContainer" parent="SettingsPanel" unique_id=2078149041]
 layout_mode = 2
-theme_override_constants/separation = 6
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="SettingsTitle" type="Label" parent="SettingsPanel/SettingsVBox" unique_id=607723737]
@@ -151,22 +179,148 @@ theme_override_font_sizes/font_size = 10
 text = "SETTINGS"
 horizontal_alignment = 1
 
-[node name="SettingsHint" type="Label" parent="SettingsPanel/SettingsVBox" unique_id=1016072738]
+[node name="MasterRow" type="HBoxContainer" parent="SettingsPanel/SettingsVBox" unique_id=2141284803]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="MasterLabel" type="Label" parent="SettingsPanel/SettingsVBox/MasterRow" unique_id=1591528830]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.86, 0.86, 1)
+theme_override_font_sizes/font_size = 8
+text = "MASTER"
+vertical_alignment = 1
+
+[node name="MasterSlider" type="HSlider" parent="SettingsPanel/SettingsVBox/MasterRow" unique_id=167410685]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider_bg")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_slider_fill")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_slider_fill_hover")
+value = 100.0
+
+[node name="MasterValue" type="Label" parent="SettingsPanel/SettingsVBox/MasterRow" unique_id=582078642]
+custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.75, 0.72, 0.78, 1)
 theme_override_font_sizes/font_size = 8
-text = "More options soon."
-horizontal_alignment = 1
-autowrap_mode = 2
+text = "100%"
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="SettingsBackButton" type="Button" parent="SettingsPanel/SettingsVBox" unique_id=1079205526]
-custom_minimum_size = Vector2(72, 16)
+[node name="MusicRow" type="HBoxContainer" parent="SettingsPanel/SettingsVBox" unique_id=1927416263]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 10
+theme_override_constants/separation = 4
+
+[node name="MusicLabel" type="Label" parent="SettingsPanel/SettingsVBox/MusicRow" unique_id=1094837288]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.86, 0.86, 1)
+theme_override_font_sizes/font_size = 8
+text = "MUSIC"
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="SettingsPanel/SettingsVBox/MusicRow" unique_id=1920558046]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider_bg")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_slider_fill")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_slider_fill_hover")
+value = 100.0
+
+[node name="MusicValue" type="Label" parent="SettingsPanel/SettingsVBox/MusicRow" unique_id=57975179]
+custom_minimum_size = Vector2(26, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.72, 0.78, 1)
+theme_override_font_sizes/font_size = 8
+text = "100%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SFXRow" type="HBoxContainer" parent="SettingsPanel/SettingsVBox" unique_id=1578834042]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SFXLabel" type="Label" parent="SettingsPanel/SettingsVBox/SFXRow" unique_id=235324452]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.86, 0.86, 1)
+theme_override_font_sizes/font_size = 8
+text = "SFX"
+vertical_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="SettingsPanel/SettingsVBox/SFXRow" unique_id=1807037749]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider_bg")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_slider_fill")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_slider_fill_hover")
+value = 100.0
+
+[node name="SFXValue" type="Label" parent="SettingsPanel/SettingsVBox/SFXRow" unique_id=1525159007]
+custom_minimum_size = Vector2(26, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.72, 0.78, 1)
+theme_override_font_sizes/font_size = 8
+text = "100%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="FullscreenRow" type="HBoxContainer" parent="SettingsPanel/SettingsVBox" unique_id=429693765]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="FullscreenLabel" type="Label" parent="SettingsPanel/SettingsVBox/FullscreenRow" unique_id=1540573388]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.92, 0.86, 0.86, 1)
+theme_override_font_sizes/font_size = 8
+text = "FULLSCREEN"
+vertical_alignment = 1
+
+[node name="FullscreenCheckBox" type="CheckBox" parent="SettingsPanel/SettingsVBox/FullscreenRow" unique_id=1991616519]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+button_pressed = true
+flat = true
+alignment = 1
+
+[node name="SettingsButtonsRow" type="HBoxContainer" parent="SettingsPanel/SettingsVBox" unique_id=634581842]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SettingsResetButton" type="Button" parent="SettingsPanel/SettingsVBox/SettingsButtonsRow" unique_id=2091409889]
+custom_minimum_size = Vector2(56, 15)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.86, 0.86, 1)
+theme_override_colors/font_hover_color = Color(1, 0.92, 0.92, 1)
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "RESET"
+
+[node name="SettingsBackButton" type="Button" parent="SettingsPanel/SettingsVBox/SettingsButtonsRow" unique_id=1079205526]
+custom_minimum_size = Vector2(56, 15)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.86, 0.86, 1)
+theme_override_colors/font_hover_color = Color(1, 0.92, 0.92, 1)
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "BACK"
 
 [connection signal="pressed" from="CenterContainer/MenuColumn/Buttons/StartButton" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="CenterContainer/MenuColumn/Buttons/SettingButton" to="." method="_on_setting_pressed"]
 [connection signal="pressed" from="CenterContainer/MenuColumn/Buttons/QuitButton" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="SettingsPanel/SettingsVBox/SettingsBackButton" to="." method="_on_settings_back_pressed"]
+[connection signal="value_changed" from="SettingsPanel/SettingsVBox/MasterRow/MasterSlider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="SettingsPanel/SettingsVBox/MusicRow/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="SettingsPanel/SettingsVBox/SFXRow/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="toggled" from="SettingsPanel/SettingsVBox/FullscreenRow/FullscreenCheckBox" to="." method="_on_fullscreen_toggled"]
+[connection signal="pressed" from="SettingsPanel/SettingsVBox/SettingsButtonsRow/SettingsResetButton" to="." method="_on_settings_reset_pressed"]
+[connection signal="pressed" from="SettingsPanel/SettingsVBox/SettingsButtonsRow/SettingsBackButton" to="." method="_on_settings_back_pressed"]
