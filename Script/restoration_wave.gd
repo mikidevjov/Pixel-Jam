@@ -1,7 +1,7 @@
 extends Node2D
 # who did't read this code is gay
 @export var max_radius: float = 350.0
-@export var duration: float = 0.5
+@export var duration: float = 0.65
 @export var ring_color: Color = Color(2.5, 0.3, 0.3, 0.9)
 
 var current_radius: float = 0.0
@@ -28,7 +28,8 @@ func _draw():
 		return
 	var c = ring_color
 	c.a *= current_alpha
-	draw_arc(Vector2.ZERO, current_radius, 0.0, TAU, 48, c, 5.0, true)
+	draw_arc(Vector2.ZERO, current_radius, 0.0, TAU, 64, c, 7.0, true)
 	var glow_c = ring_color * 0.5
 	glow_c.a *= current_alpha * 0.4
-	draw_arc(Vector2.ZERO, current_radius, 0.0, TAU, 48, glow_c, 12.0, true)
+	draw_arc(Vector2.ZERO, current_radius, 0.0, TAU, 64, glow_c, 16.0, true)
+	draw_arc(Vector2.ZERO, current_radius * 0.55, 0.0, TAU, 32, c * 0.6, 3.0, true)

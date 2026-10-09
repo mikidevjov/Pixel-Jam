@@ -1,10 +1,12 @@
 extends CharacterBody2D
 # who did't read this code is gay
 @export var step_interval: float = 0.05
-@export var max_health: int = 3
+@export var starting_health: int = 3
 @export var fire_rate: float = 0.22
 @export var max_laser_energy: float = 100.0
 @export var laser_drain_rate: float = 38.0
+
+var _run_base_laser_energy: float = 100.0
 @export var laser_recharge_time: float = 2.5
 @export var laser_damage: float = 8.0
 
@@ -44,7 +46,8 @@ signal laser_energy_changed(current: float, maximum: float)
 func _ready():
 	add_to_group("player")
 	spawn_world_position = global_position
-	health = max_health
+	_run_base_laser_energy = max_laser_energy
+	health = starting_health
 	laser_energy = max_laser_energy
 	arena = get_tree().get_first_node_in_group("arena")
 	if sprite:
@@ -246,6 +249,22 @@ func fall_into_void():
 	tween.tween_property(self, "modulate:a", 0.0, 0.7)
 	tween.chain().tween_callback(die)
 
+func heal(amount: int = 1) -> bool:
+	if is_dead or is_falling or amount <= 0:
+		return false
+	health += amount
+	player_health_changed.emit(health)
+	return true
+
+
+func upgrade_laser_timelimit(bonus_energy: float) -> void:
+	if bonus_energy <= 0.0:
+		return
+	max_laser_energy += bonus_energy
+	laser_energy += bonus_energy * 0.35
+	laser_energy_changed.emit(laser_energy, max_laser_energy)
+
+
 func take_damage(amount: int) -> bool:
 	if is_dead or is_falling or invulnerable_timer > 0.0:
 		return false
@@ -273,7 +292,7 @@ func die():
 	hide()
 
 func setup_for_run() -> void:
-	health = max_health
+	health = starting_health
 	is_dead = false
 	is_falling = false
 	died_from_void = false
@@ -286,6 +305,7 @@ func setup_for_run() -> void:
 	if shadow:
 		shadow.show()
 	laser_unlocked = true
+	max_laser_energy = _run_base_laser_energy
 	laser_energy = max_laser_energy
 	laser_overheated = false
 	is_firing_laser = false

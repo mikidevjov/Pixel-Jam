@@ -180,7 +180,7 @@ func die(killed_by_player: bool = true):
 	if killed_by_player:
 		var main = get_tree().get_first_node_in_group("main")
 		if main and main.has_method("medium_enemy_killed"):
-			main.medium_enemy_killed()
+			main.medium_enemy_killed(global_position)
 	else:
 		var main = get_tree().get_first_node_in_group("main")
 		if main and main.has_method("on_enemy_lost_without_kill"):

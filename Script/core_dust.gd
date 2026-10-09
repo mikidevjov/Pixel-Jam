@@ -9,10 +9,14 @@ var player: Node2D = null
 
 @onready var sprite: Sprite2D = $Sprite2D
 
+const VISUAL_SCALE := 3.5
+
 func _ready():
 	add_to_group("core_dust")
 	base_y = position.y
 	player = get_tree().get_first_node_in_group("player")
+	if sprite:
+		sprite.scale = Vector2(VISUAL_SCALE, VISUAL_SCALE)
 
 	modulate.a = 0.0
 	var tween = create_tween()
@@ -23,7 +27,11 @@ func _process(delta: float):
 		return
 	time += delta
 	if sprite:
-		sprite.position.y = sin(time * 5.0) * 3.0
+		var pulse := 1.0 + sin(time * 7.0) * 0.18
+		sprite.scale = Vector2(VISUAL_SCALE, VISUAL_SCALE) * pulse
+		sprite.position.y = sin(time * 5.0) * 4.0
+		var glow := 0.25 + sin(time * 9.0) * 0.15
+		sprite.modulate = Color(2.0 + glow, 0.35 + glow * 0.3, 0.25, 1.0)
 
 	# Magnetic attraction if player gets close (within 45px)
 	if is_instance_valid(player) and not player.get("is_dead") and not player.get("is_falling"):

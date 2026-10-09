@@ -16,13 +16,34 @@ const DEFAULT_FULLSCREEN := true
 @onready var sfx_slider: HSlider = $SettingsPanel/SettingsVBox/SFXRow/SFXSlider
 @onready var sfx_label: Label = $SettingsPanel/SettingsVBox/SFXRow/SFXValue
 @onready var fullscreen_toggle: CheckBox = $SettingsPanel/SettingsVBox/FullscreenRow/FullscreenCheckBox
+@onready var help_dialog: HelpDialog = $HelpDialog
 
 
 func _ready() -> void:
 	if settings_panel:
 		settings_panel.hide()
+	if help_dialog:
+		help_dialog.close()
 	_load_settings()
 	AudioManager.play_music("main_menu")
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_pressed() or event.is_echo():
+		return
+	if event is InputEventKey and event.keycode == KEY_ESCAPE:
+		if settings_panel and settings_panel.visible:
+			settings_panel.hide()
+			get_viewport().set_input_as_handled()
+			return
+		if help_dialog:
+			help_dialog.toggle()
+			get_viewport().set_input_as_handled()
+
+
+func _on_help_pressed() -> void:
+	if help_dialog:
+		help_dialog.open()
 
 
 

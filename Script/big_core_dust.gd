@@ -22,8 +22,12 @@ func _process(delta: float):
 		return
 	time += delta
 	if sprite:
+		var pulse := 1.0 + sin(time * 5.0) * 0.12
+		sprite.scale = Vector2(pulse, pulse)
 		sprite.rotation += delta * 1.5
 		sprite.position.y = sin(time * 4.0) * 4.0
+		var glow := 0.2 + sin(time * 8.0) * 0.15
+		sprite.modulate = Color(2.5 + glow, 0.5 + glow * 0.2, 0.3, 1.0)
 
 	# Attract if player gets close (within 55px)
 	if is_instance_valid(player) and not player.get("is_dead") and not player.get("is_falling"):

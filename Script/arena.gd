@@ -72,6 +72,14 @@ func configure_tile_decay(
 	_apply_decay_timings_to_all_tiles()
 
 
+func accelerate_tile_fall_speed(speed_multiplier: float, min_duration: float = 0.22) -> void:
+	if speed_multiplier <= 1.0:
+		return
+	tile_warning_duration = max(min_duration, tile_warning_duration / speed_multiplier)
+	tile_fall_duration = max(min_duration, tile_fall_duration / speed_multiplier)
+	_apply_decay_timings_to_all_tiles()
+
+
 func _apply_decay_timings_to_all_tiles() -> void:
 	for t in tiles.values():
 		if is_instance_valid(t) and t.has_method("configure_decay"):
@@ -269,7 +277,29 @@ func get_random_walkable_world_position() -> Vector2:
 	return grid_to_world(pick.x, pick.y)
 
 
+func _protected_core_bounds() -> Dictionary:
+	var pw: int = min_cluster_size.x
+	var ph: int = min_cluster_size.y
+	var min_gx: int = (grid_width - pw) / 2
+	var min_gy: int = (grid_height - ph) / 2
+	return {
+		"min_gx": min_gx,
+		"min_gy": min_gy,
+		"max_gx": min_gx + pw - 1,
+		"max_gy": min_gy + ph - 1,
+	}
+
+
+func is_protected_core_tile(gx: int, gy: int) -> bool:
+	if not is_grid_in_bounds(gx, gy):
+		return false
+	var b: Dictionary = _protected_core_bounds()
+	return gx >= b.min_gx and gx <= b.max_gx and gy >= b.min_gy and gy <= b.max_gy
+
+
 func _is_perimeter_living_tile(gx: int, gy: int) -> bool:
+	if is_protected_core_tile(gx, gy):
+		return false
 	if not has_living_tile(gx, gy):
 		return false
 	for dir in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
@@ -296,6 +326,7 @@ func decay_random_edge_tiles() -> void:
 
 	var edges: Array[Vector2i] = _collect_edge_living_tiles()
 	if edges.is_empty():
+		stop_decay()
 		return
 
 	edges.shuffle()
@@ -383,6 +414,8 @@ func decay_outer_ring():
 	_decay_full_ring()
 
 func trigger_tile(x: int, y: int):
+	if is_protected_core_tile(x, y):
+		return
 	var key = Vector2i(x, y)
 	if tiles.has(key) and is_instance_valid(tiles[key]):
 		tiles[key].set_warning()

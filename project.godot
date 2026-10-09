@@ -24,7 +24,6 @@ config/icon="res://icon.svg"
 PixelSpec="*res://Script/pixel_spec.gd"
 AudioManager="*res://Script/audio_manager.gd"
 
-
 [display]
 
 window/size/viewport_width=384
