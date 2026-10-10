@@ -1,8 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://e0ce80e9e9444394"]
+[gd_scene format=3 uid="uid://ditu77w4fxphx"]
 
-[ext_resource type="Script" path="res://Script/ui.gd" id="1_ui"]
-[ext_resource type="PackedScene" uid="uid://chelpdialogscene01" path="res://Scene/help_dialog.tscn" id="2_help"]
+[ext_resource type="Script" uid="uid://bjot2bwbmbeh6" path="res://Script/ui.gd" id="1_ui"]
+[ext_resource type="PackedScene" uid="uid://cs6ff7pchcbr5" path="res://Scene/help_dialog.tscn" id="2_help"]
 [ext_resource type="Theme" path="res://Assets/Resources/pixelcraft_theme.tres" id="3_theme"]
+[ext_resource type="Shader" uid="uid://n3orael5ty1j" path="res://Script/Shaders/pixel.gdshader" id="4_urowa"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lfpiq"]
+shader = ExtResource("4_urowa")
+shader_parameter/grain_strength = 0.01600000076
+shader_parameter/grain_speed = 2.0
+shader_parameter/pixel_size = 2.6390000778525
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
 bg_color = Color(0.1, 0.08, 0.1, 0.85)
@@ -26,10 +33,18 @@ bg_color = Color(0.98, 0.62, 0.18, 1)
 corner_radius_top_left = 1
 corner_radius_bottom_left = 1
 
-[node name="UI" type="CanvasLayer"]
+[node name="UI" type="CanvasLayer" unique_id=1278862657]
 script = ExtResource("1_ui")
 
-[node name="Control" type="Control" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2060785897]
+material = SubResource("ShaderMaterial_lfpiq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="." unique_id=977297894]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,7 +53,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_theme")
 
-[node name="HeartsContainer" type="HBoxContainer" parent="Control"]
+[node name="HeartsContainer" type="HBoxContainer" parent="Control" unique_id=490090336]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 6.0
@@ -46,18 +61,23 @@ offset_right = 220.0
 offset_bottom = 22.0
 theme_override_constants/separation = 2
 
-[node name="KillsLabel" type="Label" parent="Control"]
-layout_mode = 0
-offset_left = 10.0
-offset_top = 22.0
-offset_right = 160.0
-offset_bottom = 40.0
+[node name="KillsLabel" type="Label" parent="Control" unique_id=1793900771]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.033854168
+anchor_top = 0.111111104
+anchor_right = 0.33072916
+anchor_bottom = 0.17444445
+offset_right = 36.0
+offset_bottom = 4.3199997
+scale = Vector2(0.76, 0.76)
 theme_override_colors/font_color = Color(0.95, 0.88, 0.7, 1)
 theme_override_font_sizes/font_size = 16
 text = "Score: 0"
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="LaserContainer" type="VBoxContainer" parent="Control"]
+[node name="LaserContainer" type="VBoxContainer" parent="Control" unique_id=765903171]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -69,14 +89,14 @@ offset_bottom = 30.0
 grow_horizontal = 0
 theme_override_constants/separation = 1
 
-[node name="LaserLabel" type="Label" parent="Control/LaserContainer"]
+[node name="LaserLabel" type="Label" parent="Control/LaserContainer" unique_id=1412552507]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.78, 0.82, 1)
 theme_override_font_sizes/font_size = 8
 text = "LASER"
 horizontal_alignment = 2
 
-[node name="LaserBar" type="ProgressBar" parent="Control/LaserContainer"]
+[node name="LaserBar" type="ProgressBar" parent="Control/LaserContainer" unique_id=252336863]
 custom_minimum_size = Vector2(128, 6)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
@@ -84,7 +104,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_laser_fill")
 value = 100.0
 show_percentage = false
 
-[node name="DustContainer" type="VBoxContainer" parent="Control"]
+[node name="DustContainer" type="VBoxContainer" parent="Control" unique_id=240484796]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -96,28 +116,28 @@ offset_bottom = 56.0
 grow_horizontal = 0
 theme_override_constants/separation = 1
 
-[node name="DustLabel" type="Label" parent="Control/DustContainer"]
+[node name="DustLabel" type="Label" parent="Control/DustContainer" unique_id=1074794471]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.78, 0.45, 1)
 theme_override_font_sizes/font_size = 8
 text = "DUST"
 horizontal_alignment = 2
 
-[node name="DustBar" type="ProgressBar" parent="Control/DustContainer"]
+[node name="DustBar" type="ProgressBar" parent="Control/DustContainer" unique_id=2066269799]
 custom_minimum_size = Vector2(128, 6)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_dust_fill")
 show_percentage = false
 
-[node name="DustCountLabel" type="Label" parent="Control/DustContainer"]
+[node name="DustCountLabel" type="Label" parent="Control/DustContainer" unique_id=374468250]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.78, 0.72, 0.65, 1)
 theme_override_font_sizes/font_size = 7
 text = "0%"
 horizontal_alignment = 2
 
-[node name="LevelLabel" type="Label" parent="Control"]
+[node name="LevelLabel" type="Label" parent="Control" unique_id=126512008]
 visible = false
 layout_mode = 1
 anchors_preset = 5
@@ -132,7 +152,7 @@ theme_override_font_sizes/font_size = 8
 text = "LEVEL 1"
 horizontal_alignment = 1
 
-[node name="BossContainer" type="VBoxContainer" parent="Control"]
+[node name="BossContainer" type="VBoxContainer" parent="Control" unique_id=1640297499]
 layout_mode = 0
 offset_left = 32.0
 offset_top = 176.0
@@ -140,14 +160,14 @@ offset_right = 352.0
 offset_bottom = 200.0
 theme_override_constants/separation = 2
 
-[node name="BossLabel" type="Label" parent="Control/BossContainer"]
+[node name="BossLabel" type="Label" parent="Control/BossContainer" unique_id=334630575]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.4, 0.4, 1)
 theme_override_font_sizes/font_size = 8
 text = "THE BLACK SOUL"
 horizontal_alignment = 1
 
-[node name="BossBar" type="ProgressBar" parent="Control/BossContainer"]
+[node name="BossBar" type="ProgressBar" parent="Control/BossContainer" unique_id=1404468566]
 custom_minimum_size = Vector2(320, 6)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
@@ -155,7 +175,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_laser_fill")
 value = 100.0
 show_percentage = false
 
-[node name="LevelBanner" type="Label" parent="Control"]
+[node name="LevelBanner" type="Label" parent="Control" unique_id=2032716997]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -172,7 +192,7 @@ theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
 theme_override_font_sizes/font_size = 10
 horizontal_alignment = 1
 
-[node name="GameOverLabel" type="Label" parent="Control"]
+[node name="GameOverLabel" type="Label" parent="Control" unique_id=1349896134]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -191,7 +211,7 @@ text = "SCORE
 0"
 horizontal_alignment = 1
 
-[node name="LevelCompleteLabel" type="Label" parent="Control"]
+[node name="LevelCompleteLabel" type="Label" parent="Control" unique_id=2035279271]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -209,7 +229,7 @@ theme_override_font_sizes/font_size = 10
 text = "LEVEL COMPLETE"
 horizontal_alignment = 1
 
-[node name="VictoryLabel" type="Label" parent="Control"]
+[node name="VictoryLabel" type="Label" parent="Control" unique_id=2002456504]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -229,7 +249,7 @@ THE VOID HAS BEEN PURGED
 THE LAND IS RESTORED"
 horizontal_alignment = 1
 
-[node name="RestartHint" type="Label" parent="Control"]
+[node name="RestartHint" type="Label" parent="Control" unique_id=623212970]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -246,11 +266,7 @@ theme_override_font_sizes/font_size = 8
 text = "Press Enter or Space to Restart"
 horizontal_alignment = 1
 
-[node name="HelpDialog" parent="Control" instance=ExtResource("2_help")]
+[node name="HelpDialog" parent="Control" unique_id=43397753 instance=ExtResource("2_help")]
+visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 mouse_filter = 2

@@ -66,7 +66,7 @@ var heart_pickup_scene = preload("res://Scene/heart_pickup.tscn")
 func _ready():
 	get_tree().paused = false
 	add_to_group("main")
-	process_mode = Node.PROCESS_MODE_ALWAYS
+	process_mode = Node.PROCESS_MODE_PAUSABLE
 	if ui:
 		ui.process_mode = Node.PROCESS_MODE_ALWAYS
 	if player:
@@ -82,6 +82,7 @@ func _ready():
 func start_game() -> void:
 	is_game_over = false
 	get_tree().paused = false
+	process_mode = Node.PROCESS_MODE_PAUSABLE
 	spawn_timer = 0.0
 	_base_spawn_interval = spawn_interval
 	_current_spawn_interval = spawn_interval
@@ -113,7 +114,7 @@ func start_game() -> void:
 	update_ui()
 	_reset_dust_collection()
 	if ui and ui.has_method("show_center_fade_text"):
-		ui.call_deferred("show_center_fade_text", "EASY MODE", 16)
+		ui.call_deferred("show_center_fade_text", "Start!", 16)
 
 func _setup_arena() -> void:
 	if not arena:
@@ -515,7 +516,6 @@ func _stop_game() -> void:
 	if arena and arena.has_method("stop_decay"):
 		arena.stop_decay()
 	get_tree().paused = true
-	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _clear_all_enemies_and_projectiles() -> void:
 	for e in get_tree().get_nodes_in_group("enemy"):

@@ -31,14 +31,18 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_pressed() or event.is_echo():
 		return
-	if event is InputEventKey and event.keycode == KEY_ESCAPE:
+	if event is InputEventKey and (event.keycode == KEY_H or event.keycode == KEY_ESCAPE):
 		if settings_panel and settings_panel.visible:
 			settings_panel.hide()
 			get_viewport().set_input_as_handled()
 			return
 		if help_dialog:
-			help_dialog.toggle()
-			get_viewport().set_input_as_handled()
+			if help_dialog.is_open():
+				help_dialog.close()
+				get_viewport().set_input_as_handled()
+			elif event.keycode == KEY_H:
+				help_dialog.open()
+				get_viewport().set_input_as_handled()
 
 
 func _on_help_pressed() -> void:

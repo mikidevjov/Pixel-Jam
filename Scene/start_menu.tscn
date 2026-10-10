@@ -4,7 +4,7 @@
 [ext_resource type="Theme" path="res://Assets/Resources/pixelcraft_theme.tres" id="2_theme"]
 [ext_resource type="Texture2D" uid="uid://2cxb5igajwh7" path="res://Assets/NewArt-assets/the-void.webp" id="3_void"]
 [ext_resource type="Texture2D" uid="uid://xo3spf7djw7m" path="res://Assets/NewArt-assets/title.webp" id="4_title"]
-[ext_resource type="PackedScene" uid="uid://chelpdialogscene01" path="res://Scene/help_dialog.tscn" id="5_help"]
+[ext_resource type="PackedScene" uid="uid://cs6ff7pchcbr5" path="res://Scene/help_dialog.tscn" id="5_help"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
 bg_color = Color(0.22, 0.08, 0.1, 0.92)
@@ -141,7 +141,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "SETTING"
 
-[node name="HelpButton" type="Button" parent="CenterContainer/MenuColumn/Buttons"]
+[node name="HelpButton" type="Button" parent="CenterContainer/MenuColumn/Buttons" unique_id=1509549606]
 custom_minimum_size = Vector2(96, 16)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.86, 0.86, 1)
@@ -327,14 +327,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "BACK"
 
-[node name="HelpDialog" parent="." instance=ExtResource("5_help")]
+[node name="HelpDialog" parent="." unique_id=542032162 instance=ExtResource("5_help")]
+visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
 
 [connection signal="pressed" from="CenterContainer/MenuColumn/Buttons/StartButton" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="CenterContainer/MenuColumn/Buttons/SettingButton" to="." method="_on_setting_pressed"]

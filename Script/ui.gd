@@ -1,7 +1,6 @@
 extends CanvasLayer
-# who did't read this code is gay
+# who didn't read this code is gay
 
-const MAIN_MENU_SCENE := preload("res://Scene/start_menu.tscn")
 
 @onready var kills_label: Label = $Control/KillsLabel
 @onready var hearts_container: HBoxContainer = $Control/HeartsContainer
@@ -162,28 +161,40 @@ func show_next_wave_float() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_pressed() or event.is_echo():
 		return
-	if event is InputEventKey and event.keycode == KEY_TAB:
-		_go_to_main_menu()
-		get_viewport().set_input_as_handled()
+	if help_dialog and help_dialog.is_open():
+		if event is InputEventKey and (event.keycode == KEY_H or event.keycode == KEY_ESCAPE):
+			get_viewport().set_input_as_handled()
+			help_dialog.close()
 		return
-	if event is InputEventKey and event.keycode == KEY_ESCAPE:
-		_handle_escape_help()
+	if _is_game_over():
+		if event is InputEventKey and (event.keycode == KEY_ENTER or event.keycode == KEY_SPACE or event.keycode == KEY_R):
+			get_viewport().set_input_as_handled()
+			var main = get_tree().get_first_node_in_group("main")
+			if main and main.has_method("start_game"):
+				main.start_game()
+			return
+	if event is InputEventKey and event.keycode == KEY_TAB:
 		get_viewport().set_input_as_handled()
+		_go_to_main_menu()
+		return
+	if event is InputEventKey and event.keycode == KEY_H:
+		get_viewport().set_input_as_handled()
+		_handle_h_help()
 
 func _go_to_main_menu() -> void:
 	if help_dialog and help_dialog.is_open():
 		help_dialog.close()
 	get_tree().paused = false
-	get_tree().change_scene_to_packed(MAIN_MENU_SCENE)
+	get_tree().change_scene_to_file("res://Scene/start_menu.tscn")
 
-func _handle_escape_help() -> void:
-	if _is_game_over():
-		return
+func _handle_h_help() -> void:
 	if not help_dialog:
 		return
 	if help_dialog.is_open():
 		help_dialog.close()
 	else:
+		if _is_game_over() or get_tree().paused:
+			return
 		help_dialog.open()
 
 func _is_game_over() -> bool:
